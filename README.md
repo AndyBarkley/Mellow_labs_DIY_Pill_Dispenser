@@ -1,3 +1,9 @@
+#Goal
+Inspired by Mellow_Labs' Pill Dispenser with a schedule, I would like to expand on it with the following items:
+**Save name of container in the settings to match name of the pill.
+**Enable capability to categorize the pill as a Morning or Night (future expansion possible to other categories such as noon, evening, etc.)
+
+
 # DIY Pill Dispenser
 
 This is a 3D Printable DIY pill dispenser, and the Models and Schematics are available for purchase [purchase on my Patreon](https://www.patreon.com/Mellow_labs/shop/pill-dispenser-files-104871?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=productshare_creator&utm_content=join_link)
