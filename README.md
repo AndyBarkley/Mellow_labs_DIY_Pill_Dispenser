@@ -1,8 +1,8 @@
 # Goal
 Inspired by Mellow_Labs' Pill Dispenser with a schedule, I would like to expand on it with the following items:
 
-- **Save name of container in the settings to match name of the pill.
-- **Enable capability to categorize the pill as a Morning or Night (future expansion possible to other categories such as noon, evening, etc.)
+- **Save** name of container in the settings to match name of the pill.
+- **Enable capability to categorize the pill as a Morning or Night** (future expansion possible to other categories such as noon, evening, etc.)
 
 
 # DIY Pill Dispenser
