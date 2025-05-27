@@ -20,8 +20,7 @@
  **************************************************************************/
 
 // --- WiFi Credentials ---
-//const char* ssid = "***";
-//const char* password = "";
+
 
 // --- Hardware Pins & Motor Settings ---
 const int MOTOR_PINS[] = { 19, 19, 20, 18 };  // Motor control output pins; adjust if your wiring is different
@@ -1717,17 +1716,6 @@ void setup() {
     Serial.println("Battery activation failed!");
   }
 
-  // Connect to WiFi
-  Serial.printf("Connecting to WiFi network: %s\n", ssid);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("\nWiFi connected.");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-
   // Check if schedules.json exists; if not, create it with an empty JSON array
   if (!LittleFS.begin()) {
     Serial.println("LittleFS mount failed, attempting to format...");
@@ -1747,6 +1735,44 @@ void setup() {
   // Initialize LittleFS
   if (!LittleFS.begin()) { Serial.println("Error mounting LittleFS"); }
 
+
+  const char* ssid;
+  const char* password;
+  String stSSIDContent;
+  String stPasswordContent;
+
+  File file = LittleFS.open("/.SSID.txt", "r");
+    if (!file) {
+      Serial.println("Failed to read .ssid.txt.");
+      server.send(500, "text/plain", "Failed to open .ssid.txt file");
+  }
+  stSSIDContent = file.readString();
+  Serial.println(stSSIDContent);
+  ssid = stSSIDContent.c_str();
+  file.close();
+  
+  File keyfile = LittleFS.open("/.SSID_KEY.txt", "r");
+  if (!keyfile) {
+    Serial.println("Failed to read .SSID_KEY.txt.");
+    server.send(500, "text/plain", "Failed to open .SSID_KEY.txt file");
+  }
+  stPasswordContent = keyfile.readString();
+  Serial.println(stPasswordContent);
+  password = stPasswordContent.c_str();
+  keyfile.close();
+
+  // Connect to WiFi
+  Serial.printf("Connecting to WiFi network: %s\n", ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nWiFi connected.");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  
   listDir(LittleFS, "/",3);
 
 
