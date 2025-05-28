@@ -557,7 +557,7 @@
     <!-- Container 1 (Blue) -->
     <div class="container-block" id="container1-block">
       <div class="container-header">
-        <h2>Container 1</h2>
+        <h2 id="containerName1">Container 1</h2>
         <div>
           <button onclick="openScheduleDialog(1, null)">+ Add Schedule</button>
           <button onclick="openSettingsDialog(1)">Settings</button>
@@ -710,6 +710,10 @@
   <div id="settingsDialog">
     <h2 id="settingsDialogTitle">Container Settings</h2>
     <div style="text-align: center; margin-bottom: 15px;">
+	<label for="containerName">Pill Name: </label>
+	<input type="text" id="containerName"/>
+    </div>	
+    <div style="text-align: center; margin-bottom: 15px;">
       <button id="testMotorButton" onclick="testMotor()" style="margin-bottom: 10px;">Test motor</button>
     </div>
     <div class="slider-group">
@@ -733,6 +737,7 @@
     let currentSettingsContainer = null;
     let schedulesData = [];    // will hold schedules loaded from the server
     let settingsData = {};     // will hold settings loaded from the server, including theme
+    let pillNames = {};
 
     // Define container colors (matching header colors)
     const containerColors = {
@@ -740,6 +745,13 @@
       2: "#dc3545", // Red
       3: "#ffc107", // Yellow
       4: "#28a745"  // Green
+    };
+
+    pillNames = {
+      1: "Multivitamin", 
+      2: "Baby Aspirin",
+      3: "Vitamin D",
+      4: "Singulair"
     };
 
     // ------------------- Server Communication Functions -------------------
@@ -1059,23 +1071,25 @@
       let savedSettings = settingsData[containerId] || {};
       const motorSpeedSlider = document.getElementById('motorSpeed');
       const triggerThresholdSlider = document.getElementById('triggerThreshold');
+      const containerNameInput = document.getElementById('containerName');
+      containerNameInput.Value = "MultiVitamin";
       motorSpeedSlider.value = savedSettings.motorSpeed !== undefined ? savedSettings.motorSpeed : 128;
       triggerThresholdSlider.value = savedSettings.triggerThreshold !== undefined ? savedSettings.triggerThreshold : 1500;
       document.getElementById('motorSpeedValue').textContent = motorSpeedSlider.value;
       document.getElementById('triggerThresholdValue').textContent = triggerThresholdSlider.value;
-      
+      document.getElementById('containerName').textContent = containerNameInput.value;
+      const pillName = "Multivitamin";
+      		     
+ 
       const color = containerColors[containerId] || "#007bff";
       let settingsDialog = document.getElementById('settingsDialog');
       settingsDialog.style.borderTopColor = color;
       settingsDialog.querySelector('h2').style.color = color;
-      document.getElementById('settingsDialogTitle').textContent = `Container ${containerId} Settings`;
+      document.getElementById('settingsDialogTitle').textContent = `${pillName} Settings`;
       
       document.getElementById('testMotorButton').style.backgroundColor = color;
       document.getElementById('CancelSettingsBtn').style.backgroundColor = color;
-      document.getElementById('saveSettingsBtn').style.backgroundColor = color;
-
-
-      
+      document.getElementById('saveSettingsBtn').style.backgroundColor = color;      
 
       
       motorSpeedSlider.style.accentColor = color;
@@ -1094,7 +1108,9 @@
     async function saveSettings() {
       const motorSpeed = parseInt(document.getElementById('motorSpeed').value);
       const triggerThreshold = parseInt(document.getElementById('triggerThreshold').value);
-      settingsData[currentSettingsContainer] = { motorSpeed, triggerThreshold };
+      const pillName = document.getElementById('containerName').value;
+      settingsData[currentSettingsContainer] = { motorSpeed, triggerThreshold, pillName };
+      alert(settingsData);
       await saveSettingsToServer();
       closeSettingsDialog();
     }
@@ -1144,6 +1160,7 @@
       document.getElementById('toggleDarkButton').textContent = 
         document.body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
       
+   
       renderAllSchedules();
       document.addEventListener('click', closeAllMenusOnOutsideClick);
       
@@ -1159,6 +1176,7 @@
 
       document.getElementById('motorSpeedValue').textContent = document.getElementById('motorSpeed').value;
       document.getElementById('triggerThresholdValue').textContent = document.getElementById('triggerThreshold').value;
+      document.querySelector('#container1-block .container-header h2').textContent = 'Test';
 
       updateTimeFields();
 
