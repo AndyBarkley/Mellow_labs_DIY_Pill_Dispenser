@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mellow_labs Pill Dispenser</title>
+  <title>Mellow_labs Pill Dispenser - #1</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -95,7 +95,7 @@
     }
     #container3-block .container-header button {
       background-color: #e0a800;
-      color: #212529;
+      //color: #212529;
     }
     #container3-block .container-header button:hover {
       background-color: #d39e00;
@@ -310,35 +310,6 @@
       color: #fff;
       border-color: var(--accent-color, #007bff);
     }
-
-     /* Days Grid - Updated Styles for Time of Day Buttons 
-    #scheduleDialog .timeofday-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 4px;
-      margin-bottom: 8px;
-    }
-    #scheduleDialog .timeofday-grid button {
-      padding: 4px 8px;
-      font-size: 0.85rem;
-      border: 1px solid #ccc;
-      background: transparent;
-      color: #333;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.dark-mode #scheduleDialog .timeofday-gridd button {
-      background: transparent;
-      color: #e0e0e0;
-      border-color: #555;
-    }
-    #scheduleDialog .timeofday-grid button.active,
-    body.dark-mode #scheduleDialog .timeofday-grid button.active {
-      background: var(--accent-color, #007bff);
-      color: #fff;
-      border-color: var(--accent-color, #007bff);
-    }*/
     /* ================== Pill Count & Spinner Styles ================== */
     /* Pill Count Label */
     #scheduleDialog .pill-count label {
@@ -518,6 +489,39 @@
     body.dark-mode #container4-block .container-header h2 {
       color: #e0e0e0 !important;
     }
+	/*** TOD Grid - Updated Styles for Day Buttons ***/
+    #settingsDialog .tod-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr); /* Two buttons per row */
+		gap: 10px; /* Space between buttons */
+		justify-content: center; /* Centers the grid */
+		align-items: center; /* Aligns buttons vertically */
+		margin: 0 auto; /* Centers the grid horizontally */
+	}
+    #settingsDialog .tod-grid button {
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      border: 1px solid #ccc;
+      background: transparent;
+      color: #333;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode #settingsDialog .tod-grid button {
+      background: transparent;
+      color: #e0e0e0;
+      border-color: #555;
+    }
+    #settingsDialog .tod-grid button.active,
+    body.dark-mode #settingsDialog .tod-grid button.active {
+      background: var(--accent-color-tod, #007bff);
+      color: #fff;
+      border-color: var(--accent-color-tod, #007bff);
+    }
+	
+	
+	
     /* ============= Collapsible Settings Panel ============= */
     .collapsible-header {
       background: #8b00c2; /* Purple */
@@ -578,15 +582,123 @@
       gap: 10px; /* optional: adds spacing between buttons */
       margin-top: 20px;
     }
+	
+	/**** Toggle Switch Updates ****/
+	
+	.toggle {
+	  cursor: pointer;
+	  display: inline-block;
+	}
+
+	.toggle-switch {
+	  display: inline-block;
+	  background: #007bff;
+	  border-radius: 16px;
+	  width: 58px;
+	  height: 32px;
+	  position: relative;
+	  vertical-align: middle;
+	  transition: background 0.25s;
+	}
+	.toggle-switch:before, .toggle-switch:after {
+	  content: "";
+	}
+	.toggle-switch:before {
+	  display: block;
+	  background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+	  border-radius: 50%;
+	  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+	  width: 24px;
+	  height: 24px;
+	  position: absolute;
+	  top: 4px;
+	  left: 4px;
+	  transition: left 0.25s;
+	}
+	.toggle:hover .toggle-switch:before {
+	  background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+	  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+	}
+	.toggle-checkbox:checked + .toggle-switch {
+	  background: #0065d2;
+	}
+	.toggle-checkbox:checked + .toggle-switch:before {
+	  left: 30px;
+	}
+
+	.toggle-checkbox {
+	  position: absolute;
+	  visibility: hidden;
+	}
+
+	.toggle-label {
+	  margin-left: 5px;
+	  position: relative;
+	  top: 2px;
+	}
+	
+	.toggle-container {
+	  display: block;
+	  align-items: center;
+	  justify-content: center;
+	  gap: 15px;
+	}
+	
+	/* ==== Dispense Grid ==== */
+	
+	.dispense-grid {	
+	  display: grid;
+	  grid-template-columns: repeat(2, 1fr); /* Two buttons per row */
+	  gap: 10px; /* Space between buttons */
+	  justify-content: center; /* Centers the grid */
+	  align-items: center; /* Aligns buttons vertically */
+	  margin: 0 auto; /* Centers the grid horizontally */
+	}
+	.dispense-grid button {
+		padding: 12px 20px;
+		font-size: 1rem;
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
+		color: white;
+		display: flex;
+		align-items: center;
+		gap: 10px; /* Space between icon & text */
+	}
+
+	.morning-btn {
+		background-color: gold;
+	}
+
+	.morning-btn::before {
+		content: "☀"; /* Sun icon */
+		font-size: 1.2rem;
+	}
+
+	.night-btn {
+		background-color: navy;
+	}
+
+	.night-btn::before {
+		content: "🌙"; /* Moon icon */
+		font-size: 1.2rem;
+	}
+
   </style>
 </head>
 <body>
   <h1>Mellow_labs Pill Dispenser</h1>
+  <span class="container-grid">
+	  <div class="dispense-grid">
+		<button class="morning-btn" onclick="dispenseMorning()">Dispense Morning</button>
+		<button class="night-btn" onclick="dispenseNight()">Dispense Night</button>
+	  </div>
+  </span>
   <div class="container-grid">
     <!-- Container 1 (Blue) -->
     <div class="container-block" id="container1-block">
       <div class="container-header">
-        <h2>Container 1</h2>
+        <h2 id="containerName1">Container 1</h2> 
         <div>
           <button onclick="openScheduleDialog(1, null)">+ Add Schedule</button>
           <button onclick="openSettingsDialog(1)">Settings</button>
@@ -609,7 +721,7 @@
     <!-- Container 2 (Red) -->
     <div class="container-block" id="container2-block">
       <div class="container-header">
-        <h2>Container 2</h2>
+        <h2 id="containerName2">Container 2</h2>
         <div>
           <button onclick="openScheduleDialog(2, null)">+ Add Schedule</button>
           <button onclick="openSettingsDialog(2)">Settings</button>
@@ -632,7 +744,7 @@
     <!-- Container 3 (Yellow) -->
     <div class="container-block" id="container3-block">
       <div class="container-header">
-        <h2>Container 3</h2>
+        <h2 id="containerName3">Container 3</h2>
         <div>
           <button onclick="openScheduleDialog(3, null)">+ Add Schedule</button>
           <button onclick="openSettingsDialog(3)">Settings</button>
@@ -655,7 +767,7 @@
     <!-- Container 4 (Green) -->
     <div class="container-block" id="container4-block">
       <div class="container-header">
-        <h2>Container 4</h2>
+        <h2 id="containerName4">Container 4</h2>
         <div>
           <button onclick="openScheduleDialog(4, null)">+ Add Schedule</button>
           <button onclick="openSettingsDialog(4)">Settings</button>
@@ -728,11 +840,6 @@
       <div class="time-inputs" id="timeInputs">
         <!-- Time inputs will be generated here -->
       </div>
-      <div class="days-grid">
-        <button data-day="Morning" onclick="toggleDay(this)">Morning</button>
-        <button data-day="Noon" onclick="toggleDay(this)">Noon</button>
-        <button data-day="Night onclick="toggleDay(this)">Night</button>
-      </div>
     </div>
     <div class="footer">
       <button class="save-btn" onclick="saveSchedule()">Save</button>
@@ -746,6 +853,10 @@
     <div style="text-align: center; margin-bottom: 15px;">
       <button id="testMotorButton" onclick="testMotor()" style="margin-bottom: 10px;">Test motor</button>
     </div>
+	<div class="slider-group">
+		<label for="pillName">Pill Name: </label>
+		<input type="text" id="pillName"/>
+    </div>	
     <div class="slider-group">
       <label for="motorSpeed">Motor speed PWM: <span id="motorSpeedValue" class="slider-value"></span></label>
       <input type="range" id="motorSpeed" min="0" max="255" value="128" oninput="document.getElementById('motorSpeedValue').textContent = this.value">
@@ -754,6 +865,13 @@
       <label for="triggerThreshold">Trigger threshold: <span id="triggerThresholdValue" class="slider-value"></span></label>
       <input type="range" id="triggerThreshold" min="0" max="3000" value="1500" oninput="document.getElementById('triggerThresholdValue').textContent = this.value">
     </div>
+	<h3 style="text-align: center; margin-bottom: 15px;">Time of Day</h3>
+	<div class="tod-grid">
+	
+        <button id="morningButton" data-tod="Morning" onclick="toggleTOD(this)">Morning</button>
+        <button id="nightButton" data-tod="Night" onclick="toggleTOD(this)">Night</button>
+    </div>
+
     <div class="dialog-buttons-settings">
       <button id="saveSettingsBtn" onclick="saveSettings()">Save</button>
       <button id="CancelSettingsBtn" onclick="closeSettingsDialog()">Cancel</button>
@@ -811,13 +929,38 @@
 
     async function saveSettingsToServer() {
       try {
-        await fetch('/saveSettings', {
+		  
+		  await fetch('/saveSettings', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(settingsData)
         });
       } catch (e) {
         console.error("Error saving settings:", e);
+      }
+    }
+	
+	async function dispenseMorning() {
+      try {
+		  
+		  await fetch('/dispenseMorning', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'}
+        });
+      } catch (e) {
+        console.error("Error requesting dispense Morning:", e);
+      }
+    }
+	
+	async function dispenseNight() {
+      try {
+		  
+		  await fetch('/dispenseNight', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'}
+        });
+      } catch (e) {
+        console.error("Error requesting dispense Night:", e);
       }
     }
 
@@ -1089,47 +1232,75 @@
 
     // ------------------- Settings Dialog Functions (Container Settings) -------------------
     function openSettingsDialog(containerId) {
-      currentSettingsContainer = containerId;
+	  currentSettingsContainer = containerId;
+	  document.querySelectorAll('.tod-grid button').forEach(btn => btn.classList.remove('active'));
       let savedSettings = settingsData[containerId] || {};
       const motorSpeedSlider = document.getElementById('motorSpeed');
       const triggerThresholdSlider = document.getElementById('triggerThreshold');
+	  const pillNameInput = document.getElementById('pillName');
+	  const pillNameValue = savedSettings.pillName !== undefined ? savedSettings.pillName : "Container " + containerId.toString();
+	  const morningActive = savedSettings.morningActive !== undefined ? savedSettings.morningActive : false;
+	  const nightActive = savedSettings.nightActive !== undefined ? savedSettings.nightActive : false;
+	  alert("Morning: " + morningActive + "\n Night: " + nightActive.toString());
+      
       motorSpeedSlider.value = savedSettings.motorSpeed !== undefined ? savedSettings.motorSpeed : 128;
       triggerThresholdSlider.value = savedSettings.triggerThreshold !== undefined ? savedSettings.triggerThreshold : 1500;
-      document.getElementById('motorSpeedValue').textContent = motorSpeedSlider.value;
+      pillNameInput.value = pillNameValue;
+	  document.getElementById('motorSpeedValue').textContent = motorSpeedSlider.value;
       document.getElementById('triggerThresholdValue').textContent = triggerThresholdSlider.value;
-      
+	  document.getElementById('pillName').textContent = pillNameInput.value;
+	  if(morningActive){
+		document.getElementById('morningButton').classList.add('active');
+		}
+	  if(nightActive){
+		document.getElementById('nightButton').classList.add('active');
+		}
+	  
       const color = containerColors[containerId] || "#007bff";
       let settingsDialog = document.getElementById('settingsDialog');
       settingsDialog.style.borderTopColor = color;
       settingsDialog.querySelector('h2').style.color = color;
-      document.getElementById('settingsDialogTitle').textContent = `Container ${containerId} Settings`;
+	    
+
+	  document.getElementById('settingsDialogTitle').textContent = pillNameValue.toString() + " Settings";
       
       document.getElementById('testMotorButton').style.backgroundColor = color;
       document.getElementById('CancelSettingsBtn').style.backgroundColor = color;
       document.getElementById('saveSettingsBtn').style.backgroundColor = color;
-
-
-      
-
+	  document.documentElement.style.setProperty('--accent-color-tod', color);
+ 
       
       motorSpeedSlider.style.accentColor = color;
       triggerThresholdSlider.style.accentColor = color;
+	  
+	  
 
       document.getElementById('overlay').style.display = 'block';
       settingsDialog.style.display = 'block';
       closeAllMenus();
     }
 
+	function toggleTOD(btn1) {
+	  btn1.classList.toggle('active');
+	  
+    }
+	
     function closeSettingsDialog() {
       document.getElementById('overlay').style.display = 'none';
       document.getElementById('settingsDialog').style.display = 'none';
     }
 
     async function saveSettings() {
+	    
       const motorSpeed = parseInt(document.getElementById('motorSpeed').value);
       const triggerThreshold = parseInt(document.getElementById('triggerThreshold').value);
-      settingsData[currentSettingsContainer] = { motorSpeed, triggerThreshold };
+	  const pillName = document.getElementById('pillName').value;
+	  const morningActive = document.getElementById('morningButton').classList.contains('active');
+	  const nightActive = document.getElementById('nightButton').classList.contains('active');
+	 	
+      settingsData[currentSettingsContainer] = { motorSpeed, triggerThreshold, pillName, morningActive, nightActive };
       await saveSettingsToServer();
+	  resetContainerNames();
       closeSettingsDialog();
     }
 
@@ -1147,6 +1318,19 @@
           console.error('Error testing motor:', err);
         });
     }
+	
+	function resetContainerNames(){
+		//document.querySelector('#container1-block .container-header h2').textContent = 'Test';
+		
+		for (let c = 1; c <= 4; c++) {
+		let savedSettings = settingsData[c] || {};
+        const containerHeader = document.querySelector(`#container${c}-block .container-header h2`);
+        if (containerHeader){
+			const containerName = savedSettings.pillName !== undefined ? savedSettings.pillName : "Container " + c.toString();
+			containerHeader.textContent = containerName;
+		}
+      }
+	}
 
     // ------------------- New: Test Schedule Function (Collapsible Panel) -------------------
     // This function calls the /testSchedule endpoint, which will run through all schedules,
@@ -1193,8 +1377,9 @@
 
       document.getElementById('motorSpeedValue').textContent = document.getElementById('motorSpeed').value;
       document.getElementById('triggerThresholdValue').textContent = document.getElementById('triggerThreshold').value;
-
-      updateTimeFields(); 
+	  resetContainerNames();
+	  
+      updateTimeFields();
 
       updateClock();
       setInterval(updateClock, 1000);
