@@ -882,6 +882,7 @@
     // Global variables
     let currentContainer = null;
     let editingScheduleId = null;
+	let editingSettingId = null;
     let currentSettingsContainer = null;
     let schedulesData = [];    // will hold schedules loaded from the server
     let settingsData = {};     // will hold settings loaded from the server, including theme
@@ -907,6 +908,7 @@
 
     async function saveSchedulesToServer() {
       try {
+		alert(JSON.stringify(schedulesData));
         await fetch('/saveSchedules', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
