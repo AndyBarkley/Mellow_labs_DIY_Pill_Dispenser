@@ -20,7 +20,8 @@
  **************************************************************************/
 
 // --- WiFi Credentials ---
-
+// See /data/.SSID.txt for SSID
+// See /data/.SSID_KEY.txt for Passphrase/key for SSID
 
 // --- Hardware Pins & Motor Settings ---
 const int MOTOR_PINS[] = { 17, 19, 20, 18 };  // Motor control output pins; adjust if your wiring is different
