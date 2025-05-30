@@ -23,7 +23,7 @@
 
 
 // --- Hardware Pins & Motor Settings ---
-const int MOTOR_PINS[] = { 19, 19, 20, 18 };  // Motor control output pins; adjust if your wiring is different
+const int MOTOR_PINS[] = { 17, 19, 20, 18 };  // Motor control output pins; adjust if your wiring is different
 const int ANALOG_PIN = 2;                     // Sensor input pin for motor feedback; adjust if needed
 const int NUM_MOTORS = 1;                     // Number of motors/containers
 const int NIGHT_BUTTON_PIN = 1;
@@ -1455,6 +1455,71 @@ String getCurrentDayName() {
 }
 
 /**
+ *  @brief Handles dispensing pills marked as Morning
+ */
+void handleDispenseMorning(){
+  Serial.println("Dispensing Morning");
+
+  if (!LittleFS.exists("/settings.json")) {
+    Serial.println("No settings file found");
+    return;
+  }
+
+  File file = LittleFS.open("/settings.json", "r");
+  if (!file) {
+    Serial.println("Failed to open settings file");
+    return;
+  } else{
+    Serial.println("Opened settings file");
+
+  }
+ 
+  const size_t capacity = 2048;
+  DynamicJsonDocument settingsDoc(capacity);
+  DeserializationError error = deserializeJson(settingsDoc, file);
+  file.close();
+  if (error) {
+    Serial.println("Failed to parse settings JSON");
+    return;
+  }else {
+    Serial.println("Successfully parsed Settings JSON");
+  }
+ 
+
+  JsonArray settings = settingsDoc.as<JsonArray>();
+  for (JsonObject cnt : settings) {
+    
+    Serial.println("Inside JSON loop.");
+    bool morningActive = cnt["morningActive"];
+
+ 
+    if(morningActive){
+      Serial.println("Inside Active for Morning");
+
+      int container = cnt["containerNumber"];
+      int pillCount = 1;
+      // Retrieve container settings from settings.json (omitted here for brevity)
+      
+      int motorSpeed = cnt["motorSpeed"];        
+      int triggerThreshold = cnt["triggerThreshold"];  
+     
+      Serial.printf("Morning Match: Container %d. Dispensing %d pill(s).\n",
+                    container,  pillCount);
+      addDispenseTask(container, motorSpeed, triggerThreshold, pillCount);
+    }
+  }
+
+}
+
+/**
+ *  @brief Handles dispensing pills marked as Morning
+ */
+void handleDispenseNight(){
+  Serial.println("Dispensing Night");
+
+}
+
+/**
  * @brief Serves the embedded index.html from PROGMEM.
  */
 void handleRoot() {
@@ -1591,7 +1656,7 @@ void handleGetRTCTime() {
   int minute = rtc.minute();
   int second = rtc.second();
   char timeString[30];
-  snprintf(timeString, sizeof(timeString), "%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second);
+  printf(timeString, sizeof(timeString), "%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second);
   server.send(200, "text/plain", timeString);
 }
 
@@ -1796,6 +1861,8 @@ void setup() {
   server.on("/getRTCTime", HTTP_GET, handleGetRTCTime);
   server.on("/testMotor", HTTP_GET, handleTestMotor);
   server.on("/testSchedule", HTTP_GET, handleTestSchedule);
+  server.on("/dispenseMorning", HTTP_POST, handleDispenseMorning);
+  server.on("/dispenseNight", HTTP_POST, handleDispenseNight);
 
   server.begin();
   Serial.println("HTTP server started.");
@@ -1832,7 +1899,7 @@ void loop() {
       }
     }
   }
-
+  
   // Process next task from the queue if no motor is running and no schedule is active
   if (!motorRunning && !dispenseQueue.empty() && !scheduleActive) {
     DispenseTask task = dispenseQueue.front();
